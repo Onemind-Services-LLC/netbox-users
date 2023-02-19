@@ -1,0 +1,80 @@
+{% extends 'generic/object.html' %}
+
+{% load render_table from django_tables2 %}
+
+{% block content %}
+    <div class="row mb-3">
+        <div class="col col-md-6">
+            <div class="card table-responsive">
+                <h5 class="card-header">Summary</h5>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th scope="row">Name</th>
+                            <td>{{ object.get_full_name }} ({{ object.username }})</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>{{ object.email|placeholder }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Groups</th>
+                            <td>
+                                {% for group in object.groups.all %}
+                                    <span class="badge bg-secondary">{{ group.name }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="card table-responsive">
+                <h5 class="card-header">Status</h5>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th scope="row">Enabled</th>
+                            <td>
+                                {% if object.is_active %}
+                                    <span class="badge bg-success">Yes</span>
+                                {% else %}
+                                    <span class="badge bg-danger">No</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Staff</th>
+                            <td>
+                                {% if object.is_staff %}
+                                    <span class="badge bg-success">Yes</span>
+                                {% else %}
+                                    <span class="badge bg-danger">No</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Superuser</th>
+                            <td>
+                                {% if object.is_superuser %}
+                                    <span class="badge bg-success">Yes</span>
+                                {% else %}
+                                    <span class="badge bg-danger">No</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Last login</th>
+                            <td>{{ object.last_login|placeholder }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Date joined</th>
+                            <td>{{ object.date_joined|placeholder }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
